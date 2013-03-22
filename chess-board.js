@@ -46,20 +46,23 @@ if (Meteor.isClient) {
         'keypress input#message': function(e) {
             if (e.charCode == '13') {
                 var msg = $('input#message').val();
-                var game = Games.findOne({_id: Session.get('boardId')});
-                var messages = game.messages;
-                if (m = msg.match(/^([abcdefgh][12345678])-([abcdefgh][12345678])$/i)) {
-                    move(game.pieces, m[1], m[2]);
-                    messages.push({text: msg, isMove: true});
-                } else if (m = msg.match(/^([w|b][p|r|n|b|q|k]|empty)@([abcdefgh][12345678])$/i)) {
-                    game.pieces[m[2]] = PIECE_SET[m[1].toUpperCase()];
-                    messages.push({text: msg, isMove: true});
-                } else {
-                    messages.push({text: msg, isMove: false});
-                }
-                Games.update({_id: Session.get('boardId')}, {$set: {pieces: game.pieces, messages: messages}});
+                boardMove(msg);
                 $('input#message').val("");
             }
+        },
+        'dragstart div.piece': function(e) {
+            var parentId = e.target.parentNode.id;
+            console.log("drag: " + parentId, e);
+            e.dataTransfer.setData("Text", parentId);
+        },
+        'dragover .dropzone': function(e) {
+            e.preventDefault(); // prevent default behavior
+        },
+        'drop .dropzone': function(e) {
+            var targetId = e.target.id;
+            var sourceId = e.dataTransfer.getData("Text");
+            console.log("drop: " + targetId, e);
+            boardMove(sourceId + "-" + targetId);
         }
     };
 
@@ -77,9 +80,24 @@ if (Meteor.isClient) {
         return Session.get('boardId');
     };
 
+    boardMove = function(msg) {
+        var game = Games.findOne({_id: Session.get('boardId')});
+        var messages = game.messages;
+        if (m = msg.match(/^([abcdefgh][12345678])-([abcdefgh][12345678])$/i)) {
+            move(game.pieces, m[1], m[2]);
+            messages.push({text: msg, isMove: true});
+        } else if (m = msg.match(/^([w|b][p|r|n|b|q|k]|empty)@([abcdefgh][12345678])$/i)) {
+            game.pieces[m[2]] = PIECE_SET[m[1].toUpperCase()];
+            messages.push({text: msg, isMove: true});
+        } else {
+            messages.push({text: msg, isMove: false});
+        }
+        Games.update({_id: Session.get('boardId')}, {$set: {pieces: game.pieces, messages: messages}});
+    }
+
     move = function(pieces, from, to) {
         pieces[to] = pieces[from];
         pieces[from] = PIECE_SET.EMPTY;
         return pieces;
-    };
+    }
 }
