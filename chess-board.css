@@ -6,6 +6,7 @@
     text-decoration:none;
     text-shadow:0 1px #fff;
     width:80px;
+    cursor: move;
 }
 #chess_board { border:5px solid #333; }
 #chess_board td {
