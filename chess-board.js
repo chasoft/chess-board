@@ -50,7 +50,7 @@ if (Meteor.isClient) {
                 $('input#message').val("");
             }
         },
-        'dragstart div.piece': function(e) {
+        'dragstart span.piece': function(e) {
             var parentId = e.target.parentNode.id;
             console.log("drag: " + parentId, e);
             e.dataTransfer.setData("Text", parentId);
@@ -59,7 +59,7 @@ if (Meteor.isClient) {
             e.preventDefault(); // prevent default behavior
         },
         'drop .dropzone': function(e) {
-            var targetId = e.target.id;
+            var targetId = e.target.id ? e.target.id : e.target.parentNode.id;
             var sourceId = e.dataTransfer.getData("Text");
             console.log("drop: " + targetId, e);
             boardMove(sourceId + "-" + targetId);

@@ -2,13 +2,13 @@
     color:#000;
     display:block;
     font-size:60px;
-    margin-top:30px;
     text-decoration:none;
     text-shadow:0 1px #fff;
     width:80px;
     cursor: move;
-    height:50px;
     text-align:center;
+    height: 100%;
+    padding-top: 30px;
 }
 .dropzone {
 }
@@ -23,7 +23,6 @@
     -webkit-box-shadow:inset 0 0 0 1px #fff;
     width:80px;
     height:80px;
-    border: 1px solid red;
 }
 #chess_board tr:nth-child(odd) td:nth-child(even),
 #chess_board tr:nth-child(even) td:nth-child(odd) {
