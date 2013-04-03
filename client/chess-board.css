@@ -10,7 +10,16 @@
     height: 100%;
     padding-top: 30px;
 }
-.dropzone {
+
+.offboard_piece {
+    font-size:50px;
+    text-decoration:none;
+    text-shadow:0 1px #fff;
+    cursor: move;
+    text-align:center;
+    height: 100%;
+    padding-top: 20px;
+    display:inline-block;
 }
 
 #chess_board { border:5px solid #333; }
@@ -37,20 +46,22 @@
 #messages {
     padding-left: 0;
     margin-left: 0;
-    border-bottom: 1px solid gray;
     width: 100%;
+    overflow-y: auto; 
+    margin-bottom: 5px;
+    max-height: 580px;
+}
+
+#chat_box {
+    border-bottom: 1px solid gray;
+    margin-bottom: 5px;
+    min-height: 610px;    
 }
 
 #messages li {
     margin: 0;
     padding: 0.25em;
-    border-top: 1px solid gray;
-}
-
-div.messages {
-    max-height: 680px; 
-    overflow-y: auto; 
-    margin-bottom: 5px;
+    border-top: 1px solid gray;    
 }
 
 ul {

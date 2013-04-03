@@ -1,0 +1,79 @@
+<head>
+    <title>chess-board</title>
+</head>
+
+<body>
+    <div class="container">
+        {{> navigation}}
+        {{renderPage}}
+    </div>
+</body>
+
+<template name="start">
+    <h1>Here is how this thing works.</h1>
+</template>
+
+
+<template name="navigation">
+    <div class="navbar navbar-inverse">
+        <div class="navbar-inner">
+            <a class="brand" href="/">CHESS BOARD</a>
+            <ul class="nav pull-right">
+                {{#if boardId}}
+                <li><button id="reset" type="button" class="btn btn-danger">Reset the board</button></li>
+                {{else}}
+                <li><button id="new-board" type="button" class="btn btn-success">Create new board</button></li>
+                {{/if}}
+            </ul>
+        </div>
+    </div>
+</template>
+
+<template name="board">
+    <div class="row">
+        <div class="span1">
+            <ul id="num-rows">
+                <li>8</li><li>7</li><li>6</li><li>5</li><li>4</li><li>3</li><li>2</li><li>1</li>
+            </ul>
+        </div>
+        <div class="span7">
+            {{{render_board game.pieces}}}
+            <ul id="abc-colls">
+                <li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li><li>G</li><li>H</li>
+            </ul>
+        </div>
+        <div class="span3">
+            <div id="chat_box" class="row">
+                <div id="messages" class="messages">
+                    <ul>
+                        {{#each game.messages}}
+                        <li>{{#if isMove}}<i class="icon-hand-right"></i> {{/if}}{{text}}</li>
+                        {{/each}}
+                    </ul>
+                    You say: <input id="message">
+                </div>
+            </div>
+
+
+            <div id="offboard_pieces" class="row">
+                {{{render_piece 'wp'}}}
+                {{{render_piece 'wr'}}}
+                {{{render_piece 'wn'}}}
+                {{{render_piece 'wb'}}}
+                {{{render_piece 'wq'}}}
+                {{{render_piece 'wk'}}}
+                {{{render_piece 'bp'}}}
+                {{{render_piece 'br'}}}
+                {{{render_piece 'bn'}}}
+                {{{render_piece 'bb'}}}
+                {{{render_piece 'bq'}}}
+                {{{render_piece 'bk'}}}
+            </div>
+
+        </div>
+    </div>
+</template>
+
+<template name="not_found">
+    Ummm, there's nothing here...
+</template>
