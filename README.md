@@ -1,1 +1,1 @@
-chess-board
+A simple virtual chess board built with Meteor.

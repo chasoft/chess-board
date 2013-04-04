@@ -1,5 +1,5 @@
 <head>
-    <title>chess-board</title>
+    <title>Virtual Chess Board</title>
 </head>
 
 <body>
@@ -10,14 +10,33 @@
 </body>
 
 <template name="start">
-    <h1>Here is how this thing works.</h1>
+    <h3>Welcome to the virtual chess board.</h3>
+    <h4>
+        <blockquote>To start playing just create a new board using the green button in the upper left corner.<br/>
+        The browser will take you to the newly created board. <br/>
+        You can then copy the address of the board from the address bar and send it to a friend who can use it to get to the same board.<br/>
+        </blockquote>
+
+        <blockquote>This is how you play:
+            <ul>
+                <li>Drag and drop the pieces to move them.</li>
+                <li>To remove a piece from the board simply click on it while holding the Ctrl key down.</li>
+                <li>To add a piece to the board - drag it in from the set in the lower right corner.</li>
+            </ul>
+        </blockquote>
+        
+        <blockquote>The board does not enforce any rules, just like a normal board would not.<br/>
+        On the right side of the screen there is a chat box that also shows the moves on the board so far.<br/>
+        You can reset the board (go back to the initial configuration) using the red <em>Reset the board</em> button.<br/>
+        </blockquote>
+    </h4>
 </template>
 
 
 <template name="navigation">
     <div class="navbar navbar-inverse">
         <div class="navbar-inner">
-            <a class="brand" href="/">CHESS BOARD</a>
+            <a class="brand" href="/">CHESS BOARD 1.0</a>
             <ul class="nav pull-right">
                 {{#if boardId}}
                 <li><button id="reset" type="button" class="btn btn-danger">Reset the board</button></li>
