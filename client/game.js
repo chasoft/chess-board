@@ -14,7 +14,6 @@ Template.board.game = function() {
 
 Template.board.events = {
     'keypress input#message': function(e) {
-        console.log(e);
         if (e.keyCode == '13') {
             var msg = $('input#message');
             if (msg.val()) {
@@ -24,16 +23,18 @@ Template.board.events = {
         }
     },
     'dragstart [draggable=true]': function(e) {
-        e.dataTransfer.setData("SourceID", e.target.parentNode.id);
-        e.dataTransfer.setData("Piece", e.target.innerText);
+        console.log(e);
+        e.dataTransfer.setData("source_id", e.target.parentNode.id);
+        e.dataTransfer.setData("piece", e.target.innerHTML);
     },
     'dragover .dropzone': function(e) {
         e.preventDefault();
     },
     'drop .dropzone': function(e) {
+        console.log(e);
         var targetId = e.target.id ? e.target.id : e.target.parentNode.id;
-        var sourceId = e.dataTransfer.getData("SourceID");
-        var piece = e.dataTransfer.getData("Piece");
+        var sourceId = e.dataTransfer.getData("source_id");
+        var piece = e.dataTransfer.getData("piece");
         if (sourceId === 'offboard_pieces') {
             putPiece(piece, targetId);
         } else if (sourceId !== targetId) {
