@@ -14,7 +14,8 @@ Template.board.game = function() {
 
 Template.board.events = {
     'keypress input#message': function(e) {
-        if (e.charCode == '13') {
+        console.log(e);
+        if (e.keyCode == '13') {
             var msg = $('input#message');
             if (msg.val()) {
                 addMessage(msg.val());
@@ -35,7 +36,7 @@ Template.board.events = {
         var piece = e.dataTransfer.getData("Piece");
         if (sourceId === 'offboard_pieces') {
             putPiece(piece, targetId);
-        } else {
+        } else if (sourceId !== targetId) {
             movePiece(sourceId, targetId);
         }
     },
