@@ -38,8 +38,10 @@
     <div class="navbar navbar-inverse">
         <div class="navbar-inner">
             <a class="brand" href="/">CHESS BOARD 1.0</a>
-            <ul class="nav pull-right">
+            <ul class="nav pull-right nav-pills">
                 {{#if boardId}}
+                <li><button id="rotate" type="button" class="btn btn-info">Rotate the board</button></li>
+                <li class="divider-vertical"></li>
                 <li><button id="reset" type="button" class="btn btn-danger">Reset the board</button></li>
                 {{else}}
                 <li><button id="new-board" type="button" class="btn btn-success">Create new board</button></li>
@@ -53,13 +55,13 @@
     <div class="row">
         <div class="span1">
             <ul id="num-rows">
-                <li>8</li><li>7</li><li>6</li><li>5</li><li>4</li><li>3</li><li>2</li><li>1</li>
+                {{#each boardRows}}<li>{{this}}</li>{{/each}}
             </ul>
         </div>
         <div class="span7">
             {{{render_board game.pieces}}}
             <ul id="abc-colls">
-                <li>A</li><li>B</li><li>C</li><li>D</li><li>E</li><li>F</li><li>G</li><li>H</li>
+                {{#each boardCols}}<li>{{this}}</li>{{/each}}
             </ul>
         </div>
         <div class="span3">

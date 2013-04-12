@@ -4,30 +4,32 @@ var PIECE_SET = {
 };
 
 var EMPTY = '';
-var BOARD_COLS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-var BOARD_ROWS = ['8', '7', '6', '5', '4', '3', '2', '1'];
+var BOARD_COLS = {false:['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'], true:['H', 'G', 'F', 'E', 'D', 'C', 'B', 'A']};
+var BOARD_ROWS = {false:['8', '7', '6', '5', '4', '3', '2', '1'], true:['1', '2', '3', '4', '5', '6', '7', '8']};
 
 createBoard = function() {
     return {messages: [{text: "Game on!", isMove: false}], pieces:
-                {a8: PIECE_SET.BR, b8: PIECE_SET.BN, c8: PIECE_SET.BB, d8: PIECE_SET.BQ, e8: PIECE_SET.BK, f8: PIECE_SET.BB, g8: PIECE_SET.BN, h8: PIECE_SET.BR,
-                    a7: PIECE_SET.BP, b7: PIECE_SET.BP, c7: PIECE_SET.BP, d7: PIECE_SET.BP, e7: PIECE_SET.BP, f7: PIECE_SET.BP, g7: PIECE_SET.BP, h7: PIECE_SET.BP,
-                    a6: "", b6: "", c6: "", d6: "", e6: "", f6: "", g6: "", h6: "",
-                    a5: "", b5: "", c5: "", d5: "", e5: "", f5: "", g5: "", h5: "",
-                    a4: "", b4: "", c4: "", d4: "", e4: "", f4: "", g4: "", h4: "",
-                    a3: "", b3: "", c3: "", d3: "", e3: "", f3: "", g3: "", h3: "",
-                    a2: PIECE_SET.WP, b2: PIECE_SET.WP, c2: PIECE_SET.WP, d2: PIECE_SET.WP, e2: PIECE_SET.WP, f2: PIECE_SET.WP, g2: PIECE_SET.WP, h2: PIECE_SET.WP,
-                    a1: PIECE_SET.WR, b1: PIECE_SET.WN, c1: PIECE_SET.WB, d1: PIECE_SET.WQ, e1: PIECE_SET.WK, f1: PIECE_SET.WB, g1: PIECE_SET.WN, h1: PIECE_SET.WR
+                {A8: PIECE_SET.BR, B8: PIECE_SET.BN, C8: PIECE_SET.BB, D8: PIECE_SET.BQ, E8: PIECE_SET.BK, F8: PIECE_SET.BB, G8: PIECE_SET.BN, H8: PIECE_SET.BR,
+                    A7: PIECE_SET.BP, B7: PIECE_SET.BP, C7: PIECE_SET.BP, D7: PIECE_SET.BP, E7: PIECE_SET.BP, F7: PIECE_SET.BP, G7: PIECE_SET.BP, H7: PIECE_SET.BP,
+                    A6: "", B6: "", C6: "", D6: "", E6: "", F6: "", G6: "", H6: "",
+                    A5: "", B5: "", C5: "", D5: "", E5: "", F5: "", G5: "", H5: "",
+                    A4: "", B4: "", C4: "", D4: "", E4: "", F4: "", G4: "", H4: "",
+                    A3: "", B3: "", C3: "", D3: "", E3: "", F3: "", G3: "", H3: "",
+                    A2: PIECE_SET.WP, B2: PIECE_SET.WP, C2: PIECE_SET.WP, D2: PIECE_SET.WP, E2: PIECE_SET.WP, F2: PIECE_SET.WP, G2: PIECE_SET.WP, H2: PIECE_SET.WP,
+                    A1: PIECE_SET.WR, B1: PIECE_SET.WN, C1: PIECE_SET.WB, D1: PIECE_SET.WQ, E1: PIECE_SET.WK, F1: PIECE_SET.WB, G1: PIECE_SET.WN, H1: PIECE_SET.WR
                 }
     };
 };
 
 Handlebars.registerHelper('render_board', function(pieces) {
     var boardHtml = '<table id="chess_board" cellpadding="0" cellspacing="0">';
-    for (var row in BOARD_ROWS) {
+    var reverse = Session.get("reverse_board");
+    for (var row in BOARD_ROWS[reverse]) {
         var rowHtml = "<tr>";
-        for (var col in BOARD_COLS) {
-            var pos = BOARD_COLS[col] + BOARD_ROWS[row];
-            var pieceHtml = pieces[pos] ? '<div class=piece draggable=true title="Drag to move. Ctrl+Click to remove.">' + pieces[pos] + '</div>' : "";
+        for (var col in BOARD_COLS[reverse]) {
+            var pos = BOARD_COLS[reverse][col].toUpperCase() + BOARD_ROWS[reverse][row].toUpperCase();
+            var pc = pieces[pos.toUpperCase()] || pieces[pos.toLowerCase()];
+            var pieceHtml = pc ? '<div class=piece draggable=true title="Drag to move. Ctrl+Click to remove.">' + pc + '</div>' : "";
             rowHtml = rowHtml + '<td class=dropzone id=' + pos + '>' + pieceHtml + '</td>';
         }
         boardHtml = boardHtml + rowHtml + "</tr>";

@@ -1,3 +1,5 @@
+Session.set('reverse_board', false);
+
 Meteor.Router.add({
     '/': 'start',
     '/board/:id': function(id) {
@@ -12,6 +14,14 @@ Template.board.game = function() {
     return getCurrentGame();
 };
 
+Template.board.boardRows = function() {
+    return BOARD_ROWS[Session.get('reverse_board')];
+};
+
+Template.board.boardCols = function() {
+    return BOARD_COLS[Session.get('reverse_board')];
+};
+
 Template.board.events = {
     'keypress input#message': function(e) {
         if (e.keyCode == '13') {
@@ -23,7 +33,6 @@ Template.board.events = {
         }
     },
     'dragstart [draggable=true]': function(e) {
-        console.log(e);
         e.dataTransfer.setData("source_id", e.target.parentNode.id);
         e.dataTransfer.setData("piece", e.target.innerHTML);
     },
@@ -31,7 +40,6 @@ Template.board.events = {
         e.preventDefault();
     },
     'drop .dropzone': function(e) {
-        console.log(e);
         var targetId = e.target.id ? e.target.id : e.target.parentNode.id;
         var sourceId = e.dataTransfer.getData("source_id");
         var piece = e.dataTransfer.getData("piece");
@@ -61,6 +69,9 @@ Template.board.rendered = function() {
 Template.navigation.events = {
     'click button#reset': function() {
         Games.update({_id: getBoardId()}, {$set: createBoard()});
+    },
+    'click button#rotate': function() {
+        Session.set('reverse_board', !Session.get('reverse_board'));
     },
     'click button#new-board': function(e) {
         var boardId = Games.insert(createBoard());
